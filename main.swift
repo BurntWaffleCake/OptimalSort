@@ -1,18 +1,11 @@
 import Foundation
 
-let path = "random.txt"
-var randomWords : [String] = []
-
-do {
-    let contents = try NSString(contentsOfFile: path, encoding: String.Encoding.ascii.rawValue)
-    var count = 1000
-    
-    contents.enumerateLines({ (line, stop) -> () in
-                                if count > 0 {
-                                    randomWords.append(line)
-                                    count -= 1
-                                }
-                            })
+func inptStrings() -> [String] {
+    var strings : [String] = []
+    while let x = readLine() {
+        strings.append(x)
+    }
+    return strings
 }
 
 //from apple forums
@@ -163,34 +156,6 @@ func compareWords(wordA: String, wordB:String, offset:Int) -> String {
     } else {
         return wordB
     }
-
-    // var wordALower = getLetters(string:wordA)
-    // var wordBLower = getLetters(string:wordB)
-    // if wordALower.count ~= wordBLower.count {
-    //     let charLocation = lesserInt(IntA:wordALower.count, IntB:wordBLower.count) 
-    //     if wordALower.count > wordBLower.count {
-    //         wordALower += " "
-    //     } else {
-    //         wordBLower += " "
-    //     }
-    //     if charLocation < offset {
-    //         let wordAChar = returnChar(string:wordALower, offsetBy:charLocation)!
-    //         let wordBChar = returnChar(string:wordBLower, offsetBy:charLocation)!
-    //         if priorChar(charA:wordAChar,charB:wordBChar) == wordAChar {
-    //             return wordA
-    //         } else {
-    //             return wordB
-    //         }
-    //     }
-        
-    // }
-    // let wordAChar = returnChar(string:wordA, offsetBy:offset)!
-    // let wordBChar = returnChar(string:wordB, offsetBy:offset)!
-    // if priorChar(charA:wordAChar,charB:wordBChar) == wordAChar {
-    //     return wordA
-    // } else {
-    //     return wordB
-    // }
 }
 
 func sortStrings(strings:[String], charCount:Int) -> [Any] {
@@ -225,19 +190,6 @@ func sortStrings(strings:[String], charCount:Int) -> [Any] {
      for (count,array) in Strings.enumerated() {
          if array.count > 1 {
              Strings[count] = (sortStrings(strings: array as! [String], charCount:charCount + 1))
-             // var same = false
-             // for word in array {
-             //     if word as! String == array[0] as! String {
-             //         same = true
-             //         break
-             //     }
-             
-             //     // if findWord(array:array as! [String], word: word as! String) == true {
-             //     //     same = true
-             //     //     print("duplicate found")
-             //     //     break
-             //     // }
-             // }
          }
      }
      return Strings 
@@ -275,43 +227,4 @@ func printElements(array:[Any]) {
     }
 }
 
-// print("note that duplicates will be removed")
-// print("each new line will be seen as a new word")
-// print("special characters are supported but it is recommended that you do not include spaces")
-// print("input no characters to execute the sort")
-
-//let input = getInput()
-
-//let noDupInput = Array(Set(input))
-//print("given input", input)
-//print("sorting input", noDupInput)
-
-var randomWordsLower : [String] = []
-
-for word in randomWords {
-    randomWordsLower.append(word.lowercased())
-}
-
-// let sortedStrings = flatten(sortStrings(strings:noDupInput, charCount:0)) 
-// print(sortedStrings)
-// printElements(array: sortedStrings)
-
-//printElements(array: sortedStrings)
-
-for _ in 0..<5 {
-    let start = DispatchTime.now()
-    let sortedStrings = flatten(sortStrings(strings: randomWordsLower, charCount:0))
-    let end = DispatchTime.now()
-    let differenceNano = end.uptimeNanoseconds - start.uptimeNanoseconds
-let runtime = Double(differenceNano) / 1_000_000.0
-print("Runtime: \(runtime) ms")
-}
-
-
-let start2 = DispatchTime.now()
-let sortedWords = randomWords.sorted { $0.lowercased() < $1.lowercased() }
-let end2 = DispatchTime.now()
-
-let differenceNano2 = end2.uptimeNanoseconds - start2.uptimeNanoseconds
-let runtime2 = Double(differenceNano2) / 1_000_000.0
-print("Runtime: \(runtime2) ms")
+print(flatten(sortStrings(strings: inptStrings(), charCount:0)))
